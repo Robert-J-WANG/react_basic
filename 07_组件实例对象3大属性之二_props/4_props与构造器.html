@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入本地下载的react库 -->
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于jsx  转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- 引入 prop-types库，用于设置属性的限制条件 -->
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+    <title> Document</title>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <div id="test3"></div>
+    
+    <!-- 案例需求： 要求页面显示的姓名不能为空，显示的年龄比实际的大一岁，没有性别属性值时，设为默认值 -->
+
+    <!-- 编写jsx -->
+    <script type="text/babel">
+        // create a class component
+        class Person extends React.Component{
+            // 1. 类中的构造器能省略则省略， 因为初始状态可以通过静态属性state赋值的方式来设置，而自定义的方法也可以通过箭头函数的方式来传递
+            // 2, 如果不省略，，构造器传不传props，super接不接props，取决于需不需要再类中通过实例去访问
+            constructor(props){
+                super(props);
+            }
+
+           // 给类本身添加静态属性propTypes，来限制其他属性的样式
+            static propTypes={
+                name:PropTypes.string.isRequired,// 名字为字符串，不能为空
+                gender:PropTypes.string,
+                age:PropTypes.number,
+            }
+
+            // 给类本身添加静态属性defaultProps，来指定其他属性默认值
+            static defaultProps={
+                gender:'不男不女', // 性别为空时，使用默认值
+                age:100,
+            }
+
+            render(){
+
+                const {name,age,gender}=this.props;
+                return (
+                    <ul>
+                        <li>Name: {name}</li>
+                        <li>Gender: {gender}</li>
+                        <li>Age: {age}</li>
+                    </ul>
+                )
+            }
+        }
+        
+        ReactDOM.render(<Person name="tom"/>,document.getElementById('test1')) 
+    </script>
+</body>
+</html>

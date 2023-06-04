@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>类的基本知识</title>
+</head>
+<body>
+    <script type="text/javascript">
+        //1,  class basic
+
+        // create a class called Person
+        class Person {
+            
+            // use constructor to initialize the class
+            constructor(name,age) {
+                this.name = name;
+                this.age = age;
+            }
+            // define the methods
+            speak(){
+                console.log('my name is:'+this.name +', my age is:'+ this.age);
+                // 使用模版字符串$时。 不是单引号，而是反斜引号
+                console.log(`my name is : ${this.name}, my age is: ${this.age}`);
+            }
+        }
+        // // use the class to create a new instance of the class
+        // const p1 = new Person('tom',18);
+        // const p2 = new Person('peter',20)
+        // // print out the object p1
+        // console.log(p1);
+        // p1.speak();
+        // p2.speak();
+
+        //2,  class  extends the class
+        // create a class called Student that extends class Person
+        class Student extends Person {
+            // use the constructor to initialize 
+            constructor(name, age, grage){
+                super(name, age); // extend the Person constructor
+                this.grage = grage;
+            }
+            // override the method of the class Person
+            speak(){
+                console.log(`my name is : ${this.name}, my age is: ${this.age}, my grade is ${this.grage}`);
+            }
+
+            // the method of it own
+            study(){
+                console.log('i am studing');
+                
+            }
+
+        };
+
+        //  use the class to create a new instance of the class Student
+        const s1=new Student('jim',12, 5);
+
+        // print out the object s1
+        console.log(s1);
+
+        // call the method of the class
+        s1.speak();
+        s1.study();
+    </script>
+    
+</body>
+</html>

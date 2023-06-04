@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入本地下载的react库 -->
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于jsx  转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- 引入 prop-types库，用于设置属性的限制条件 -->
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+    <title> Document</title>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <div id="test3"></div>
+    
+    <!-- 案例需求： 要求页面显示的姓名不能为空，显示的年龄比实际的大一岁，没有性别属性值时，设为默认值 -->
+
+    <!-- 编写jsx -->
+    <script type="text/babel">
+        // create a class component
+        class Person extends React.Component{
+
+            // 使用组件的props属性，从组建外部传递数据
+
+            render(){
+                
+                const {name,age,gender}=this.props;
+                // 注意： props 是只读的，不能修改
+                // this.props.name="jack";// Cannot assign to read only property 'name' of object '#<Object>'
+                return (
+                    <ul>
+                        <li>Name: {name}</li>
+                        <li>Gender: {gender}</li>
+                        <li>Age: {age+1}</li>
+                    </ul>
+                )
+            }
+            
+            
+        }
+        // 使用组件内置的propType属性对属性类型和必要性限制
+        Person.propTypes={
+            name:PropTypes.string.isRequired,// 名字为字符串，不能为空
+            gender:PropTypes.string,
+            age:PropTypes.number,
+            speak:PropTypes.func, //对方法类型的限制
+        }
+        // 使用组件内置的defaultProps属性对属性默认值限制
+        Person.defaultProps={
+            gender:'不男不女', // 性别为空时，使用默认值
+            age:100,
+        }
+
+
+        // 基本传递方式：
+        // 这里的 value值”18“，需要改为{18}，才能进行运算
+        ReactDOM.render(<Person name="tom" gender="female" speak={speak}/>,document.getElementById('test1')) 
+        ReactDOM.render(<Person name="kate" age={28} />,document.getElementById('test2')) 
+
+        // 批量传递方式：使用展开运算符。react中允许使用展开运算符 {...p} 来展开一个对象,用于传递数据，但是仅仅适用于标签属性中，其他地方不可用。
+        const p3={name:"jack", age:38, gender:"female"}
+        ReactDOM.render(<Person {...p3}/>,document.getElementById('test3')) 
+
+        function speak(){
+            console.log('i can speak');
+        }
+    
+    </script>
+
+
+
+</body>
+
+</html>

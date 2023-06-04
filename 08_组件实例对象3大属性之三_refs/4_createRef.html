@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入本地下载的react库 -->
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于jsx  转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- 引入 prop-types库，用于设置属性的限制条件 -->
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+    <title> Document</title>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="test"></div>
+   
+
+    <!-- 案例需求： 左边输入框：输入内容后，点击按钮，弹出对话框。右边输入框，输入内容，点击空白处，弹出对话框 -->
+
+    <!-- 编写jsx -->
+    <script type="text/babel">
+        // create a class component
+        class Demo extends React.Component{
+
+            // React.createRef()调用后可以返回一个容器，该容器可以存储被ref所标识的节点，该容器是专人专用的，只能存放一个节点
+            myRef= React.createRef();
+            // 获取多个节点时，需要分别创建多个容器
+            myRef2= React.createRef();
+            
+            showDateLeft=()=>{
+               console.log(this.myRef);// {current: input}
+               console.log(this.myRef.current); //<input type="text" placeholder="点击按钮弹出提示"/> 
+               alert(this.myRef.current.value)
+            }
+
+            showDateRight=()=>{
+               alert(this.myRef2.current.value)
+            }
+            
+
+            render(){
+                return (
+                    <div>
+                        <input ref={this.myRef} type="text" placeholder="点击按钮弹出提示"/> 
+                        <button onClick={this.showDateLeft}>click on </button>
+                        <input ref={this.myRef2} type="text" onBlur={this.showDateRight} placeholder="失去焦点弹出提示"/>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<Demo />, document.getElementById("test"));
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入本地下载的react库 -->
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于jsx  转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <title> Document</title>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <div id="test3"></div>
+    
+
+    <!-- 编写jsx -->
+    <script type="text/babel">
+        // create a class component
+        class Person extends React.Component{
+
+            // 使用组件的props属性，从组建外部传递数据
+
+            render(){
+                const {name,age,gender}=this.props;
+                return (
+                    <ul>
+                        <li>Name: {name}</li>
+                        <li>Gender: {gender}</li>
+                        <li>Age: {age}</li>
+                    </ul>
+                )
+            }
+        }
+        // 基本传递方式：
+        ReactDOM.render(<Person name="tom" age="18" gender="female"/>,document.getElementById('test1')) 
+        ReactDOM.render(<Person name="kate" age="28" gender="male"/>,document.getElementById('test2')) 
+
+        // 批量传递方式：使用展开运算符。react中允许使用展开运算符 {...p} 来展开一个对象,用于传递数据，但是仅仅适用于标签属性中，其他地方不可用。
+        const p3={name:"jack", age:"38", gender:"female"}
+        ReactDOM.render(<Person {...p3}/>,document.getElementById('test3')) 
+    
+    </script>
+
+
+
+</body>
+
+</html>

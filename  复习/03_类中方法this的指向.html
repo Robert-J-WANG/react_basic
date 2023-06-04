@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Create a class called Person 
+        class Person{
+            constructor(name, age){
+                this.name = name;
+                this.age = age;
+            }
+
+             // 思考？？
+                // speak方法是放在哪里的？- 类的原型对象上，供实例使用
+                // 通过Person类的实例调佣speak方法时，speak中的this就是Person的实例
+
+            speak(){
+                console.log(this);
+                
+            }
+        }
+        // use the class to instantiate the object
+        const p1=new Person('tom', 19); // 通过实例 p1 调用speak方法
+
+        // // call the method
+        // p1.speak();
+
+
+    // 疑问？？
+    const x=p1.speak; // 相当于把函数speak=function(){console.log(this);} 赋值给了x, 
+                      // 相当于x=function(){console.log(this);}，但是此方法还是在类中定义的，只是把堆中存储的函数的地址赋给了x, 此时，speak和x都指向了同一个函数。
+    x(); // 相当于window直接调用了,window.x()，此时方法里的this，指向的是window对象，跟上面的p1对象没有关系。但是，JS规定类中定义的方法局部开启了严格模式，this不能指向window，所以此时的this是undifined
+
+    </script>
+</body>
+</html>

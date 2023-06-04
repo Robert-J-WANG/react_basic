@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入本地下载的react库 -->
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于jsx  转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <style>
+        .title{
+            background-color: pink;
+            width: 200px;
+        }
+    </style>
+
+    <title> Document</title>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="test">
+
+        <!-- <h2 id="atguigu">
+            <span>hello react</span>
+        </h2> -->
+
+    </div>
+
+    <!-- 编写jsx -->
+    <!-- jsx 编写结构清晰，会自动转化为原生JS  -->
+    <script type="text/babel">
+        const myId='aTguiGu'
+        const myData='hello react'
+        const VDOM =(
+        <div>
+            <h2 id={myId.toLowerCase()} className="title">
+                <span style={{color:"white", fontSize:"16px"}}>{myData.toUpperCase()}</span>
+            </h2>
+            <h2 id={myId.toUpperCase()} className="title">
+                <span style={{color:"white", fontSize:"16px"}}>{myData.toUpperCase()}</span>
+            </h2>
+            <input type="text"/>
+            
+            <Good>123</Good> 
+
+        </div>
+
+        )
+        
+        ReactDOM.render(VDOM,document.getElementById('test')) 
+        /* jsx 语法规则： 
+        1， 定义虚拟DOM时，不要写引号 
+        2， 标签混入JS表达式时，要用{}  id={myId.toLowerCase()}
+        3,  样式的类名指定，不用class，要用className, className="title"
+        4,  内联样式，要用style={{color:"white", fontSize:"16px"}的形式
+        5,  只能有一个跟标签， 可以将多个标签放入一个跟标签中
+        6， 标签必须闭合
+        7,  标签首字母
+               （1） 小写字母开头时，则将标签转换为HTML中的同名元素，如果没有对应的标签名，则报错
+               （2） 大写字母开头时，react回去渲染对应的组件，如果组件未定义，则报错
+
+        */
+    </script>
+
+
+
+</body>
+
+</html>

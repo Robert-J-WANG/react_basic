@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入本地下载的react库 -->
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于jsx  转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- 引入 prop-types库，用于设置属性的限制条件 -->
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+    <title> Document</title>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="test"></div>
+
+    <!-- 编写jsx -->
+    <script type="text/babel">
+        // create a class component
+        class Demo extends React.Component{
+
+            state={isHot:true}
+            
+            showData=()=>{
+                const {ipt1}=this
+                alert(ipt1.value)
+            }
+            changeWeather=()=>{
+                // 获取state
+                const {isHot}=this.state
+                // 更新state
+                this.setState({isHot:!isHot})
+            }
+            // 将内联函数改为类式函数，避免刷新页面是，频繁调用render。不过无关紧要，开发中多使用内联函数
+            saveInput=(currentNode)=>{
+                this.ipt1=currentNode
+                console.log('@',currentNode);
+            }
+            
+            render(){
+                const {isHot}=this.state
+                return(
+                    <div>
+                        <h2>今天天气很{isHot?"炎热":"凉爽"}</h2>
+
+                        {/*箭头函数时内联函数时，每次页面更新，比如点击更改天气按钮，函数都要执行2次，第一次传递一个空节点，第2次才会传递当前节点 */}
+                        {/*<input ref={(currentNode)=>{this.ipt1=currentNode,console.log('@',currentNode);
+                        }} type="text"/> */}
+
+                        {/*可以将内联函数改为类事函数，避免传递空节点的问题*/}
+                        <input ref={this.saveInput} type="text"/>
+                        
+                        <button onClick={this.showData}>点我提示输入的数据</button>
+                        <button onClick={this.changeWeather}>点我更改天气</button>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<Demo />, document.getElementById("test"));
+      
+    
+    </script>
+</body>
+</html>

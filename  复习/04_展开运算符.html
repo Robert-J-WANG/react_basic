@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 展开运算符：... 的用法 -->
+    <script>
+        // 用法1：展开数组
+        let arr1=[1,3,5,7,9];
+        let arr2=[2,4,6,8,10];
+        console.log(arr1); // [1, 3, 5, 7, 9]
+        console.log(...arr2);// 能展开一个数组 2 4 6 8 10
+
+        // 用法2：连接数组
+        let arr3=[...arr1,...arr2]
+        console.log(arr3); // [1, 3, 5, 7, 9, 2, 4, 6, 8, 10]
+        
+        // 用法3：函数传参
+        function sum(...numbers){ 
+
+            // 数组的reduce方法求和
+            return numbers.reduce((preValue,currentValue)=>{
+                return preValue+currentValue;
+            })
+        }
+        console.log(sum(1,2,3,4,5,6,7,8,9)); //45
+
+        // 用法4：复制一个对象（构造字面量对象），但不能展开一个对象
+        let p1={name: 'sam', age:18}
+        // console.log(...p1); // 错误，无法展开一个对象
+        let p2={...p1} // 复制对象，用花括号包裹
+        console.log(p2); // {name: 'sam', age: 18}
+
+        // 复制对象的同时，能修改属性
+        let p3={...p1,name:'tom'} //
+        console.log(p3); //{name: 'tom', age: 18}
+        
+        // 复制对象的同时，能合并属性
+        let p4={...p1,add:'12 kire AVE'}
+        console.log(p4); // {name: 'sam', age: 18, add: '12 kire AVE'}
+        
+    </script>
+</body>
+</html>

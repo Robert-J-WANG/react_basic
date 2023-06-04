@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入本地下载的react库 -->
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于jsx  转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- 引入 prop-types库，用于设置属性的限制条件 -->
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+    <title> Document</title>
+</head>
+
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        //#region
+            /*
+                高阶函数：如果一个函数符合下面规范中的任何一个，那该函数就是高阶函数
+                    1， 若A函数接收的参数，是一个函数，那么A函数就是一个高阶函数
+                    2， 若A函数，调用时的返回值依然是一个函数，那么它也是一个高阶函数，比如下面的saveFormData函数，它的返回值是一个匿名的箭头函数
+                    3， 常见的高阶函数有：Promise, setTimeOut,arr.map()等等
+
+                函数的柯里化： 通过函数调用，继续返回函数的方法，实现多次接受参数，最后统一处理的函数编码形式
+            */
+       //#endregion
+        class Demo extends React.Component{
+
+            // 初始化状态
+            state={
+                username:'',
+                password: '',
+            }
+            // 表单提交回调
+            handlerSubmit=(event)=>{
+                event.preventDefault();// 阻止表单提交
+                const {username,password} = this.state
+                alert(`username is ${username}, password is ${password}`)
+            }
+            // // 保存用户名到状态中
+            // saveUsername=(event)=>{
+            //     // console.log(event.target.value);
+            //     this.setState({username: event.target.value})
+
+            // }
+            // // 保存密码到状态中
+            // savePassword=(event)=>{
+            //     // console.log(event.target.value);
+            //     this.setState({password: event.target.value})
+
+            // }
+            // 保存用户名和密码使用一个函数处理, 此函数也返回一个函数，在返回的函数中处理数据
+            saveFormDate=(dataType)=>{
+                return (event)=>{
+                    // 变量dataType用来保存数据的变量，是username和password
+                    // 而接收的数据则是event.target.value
+                    console.log(dataType);
+                    console.log(event.target.value);
+                    console.log(dataType,event.target.value);
+
+                    // 把数据保存到状态中
+                    this.setState({[dataType]:event.target.value})
+                }
+            }
+
+            render(){
+               
+                return(
+                    <form action="http://www.atguigu.com" onSubmit={this.handlerSubmit}>
+                        <span> 用户名</span>
+                        <input onChange={this.saveFormDate('username')} type="text" name="username"/>
+                        <span> 密码</span>
+                        <input onChange={this.saveFormDate('password')} type="password" name="password"/>
+                        <button>提交</button>
+                    </form>
+                )
+            }
+        }
+
+        ReactDOM.render(<Demo />, document.getElementById("test"));
+      
+    
+    </script>
+</body>
+</html>

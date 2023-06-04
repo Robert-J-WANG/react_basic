@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <!-- 引入本地下载的react库 -->
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于jsx  转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <title> state</title>
+</head>
+
+<body>
+    <!-- create a container -->
+    <div id="test">
+    </div>
+
+    <!-- write jsx code -->
+    <script type="text/babel">
+        //1, create a class component
+        class Weather extends React.Component {
+            // create a constructor to initialize
+            constructor(props){
+                super(props); // extends Component 
+
+                // initialize state object property
+                this.state ={isHot:false, isWind:true}
+                
+                // 等号右边：Weather的原型对象属性demo，调用bind方法，生成以一个新的函数，将this指向Weather的原型对象，将这个函数赋值给类的名为changeWeather的属性
+                this.changeWeather=this.demo.bind(this);
+                // bind 会拿原型对象上的demo方法，生成一个新的函数，并把函数赋给名为changeWeather的属性，这样就挂在实例对象身上。实例对象调用时，直接就能调用自身上的changeWeather属性了
+
+
+            }
+            render() {
+                //  读取状态
+                const {isHot,isWind} = this.state;
+                console.log(this);
+                //  判断状态，返回结果
+                return <h2 id="title" onClick={this.changeWeather}>今天天气很{isHot?"炎热":"凉爽"},今天有{isWind?"大风":"微风"}</h2>
+            }
+            // 自定义一个方法，作为onclick的回调函数
+            demo(){
+                // 疑问？
+                // 1, demo方法放在了哪里？类Weather的原型对象上，供实例对象调用
+                // 2,  由于demo是做为onClick的回调，所以不是通过实例调用的，而是直接调用的，即通过window直接调用的，但是，双重原因，导致this不能指向window；
+                // (1) js中类中定义的方法开启了严格模式，进制this指向window
+                // (2) react中Rabel规定了，函数中使用了use strict 模式，this无法指向window对象
+                 // 所以此时的this是undefined
+                console.log(this);
+
+                // 那么如何解决？让这里的this指向Weather的实例对象？使用关键字bind（this），改变this的指向问题，详见上面的构造器
+
+                // 获取isHot的值
+                const isHot =this.state.isHot;
+                const isWind=this.state.isWind;
+                // 严重注意，react中状态的值不可直接更改（虽然从代码层面，isHot的值已经更改了，并且控制台可以检查到，但是react不识别这样的更改，开发者工具检查不到更改）
+
+                // 下面这行就是直接更改
+                // this.state.isHot = !isHot; // 这样写react无法识别
+
+                 // 因此，需要借助一个react内置的API进行更改，setState()
+                 this.setState({isHot:!isHot,isWind:!isWind});
+
+                console.log(isHot);
+                console.log(isWind);
+                
+
+            } 
+        }
+        // 2, render the weather component to the web page
+        ReactDOM.render(<Weather/>, document.getElementById("test"));
+
+        // 3, bind the click event to the component
+        // // 方法1
+        // const title= document.getElementById("title");
+        // title.addEventListener("click",()=>{
+        //     console.log('我被点击了');
+        // })
+
+        // // 方法2
+        // const title=document.getElementById('title');
+        // title.onclick=()=>{
+        //     console.log('我被点击了');
+        // }
+
+        // 方法3 react 使用方法3，避免document.getElementById的多次出现
+        // 注意格式： 原生JS中的onclick="demo()" 改为onClick={demo}
+        // function demo(){
+        //     // 获取isHot的值
+        //     // console.log('此处修改isHot的值');
+        //     const {isHot} = this.state; 
+        //     // 获取不到state对象属性，应为this 是undefined ，react中Rabel规定了，函数中使用了use strict 模式，this无法指向window对象，所以是未定义，因此，不能通过自定义函数获得，需要放置到构造器中
+            
+        //     console.log(this);
+            
+        // }
+
+    
+    </script>
+</body>
+
+</html>
