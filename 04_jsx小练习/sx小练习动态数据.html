@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../js/babel.min.js"></script>
 
     <style>
-        .title{
+        .title {
             background-color: pink;
             width: 300px;
         }
@@ -31,28 +31,30 @@
     <!-- 编写jsx -->
     <!-- jsx 编写结构清晰，会自动转化为原生JS  -->
     <script type="text/babel">
-        const myId='aTguiGu'
-        const myData='前端JS框架列表'
-        const data=['Angular','react','Vue']
+        const myId = 'aTguiGu'
+        const myData = '前端JS框架列表'
+        const data = ['Angular', 'react', 'Vue','angular','jquery']
 
-        const VDOM =(
-        <div>
-            <h2 id={myId.toLowerCase()} className="title">
-               {myData}
-            </h2>
-            <ul>
-                {
-                    // 只能书写JS表达式，不能写语句
-                    data.map((item, index)=>{
-                        return <li key={index}>{item}</li>
-                    })
-                }
-            </ul>
+        const VDOM = (
+            <div>
+                <h2 id={myId.toLowerCase()} className="title">
+                    {myData}
+                </h2>
+                <ul>
+                    {
+                        // 只能书写JS表达式，不能写语句
+                        data.map((item, index) => {
+                            return <li key={index}>{item}</li>
+                        })
+                        
+                    }
+                    
+                </ul>
 
-        </div>
+            </div>
 
         )
-        ReactDOM.render(VDOM,document.getElementById('test')) 
+        ReactDOM.render(VDOM, document.getElementById('test'))
         /* JS表达式和JS语句的区别
         JS表达式：一个表达式会产生一个值，可以放在任何一个需要的地方
             下面这些都是表达式：

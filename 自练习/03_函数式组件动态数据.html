@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入本地下载的react库 -->
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于jsx  转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <style>
+        .my-id {
+            color: blue;
+        }
+    </style>
+</head>
+<!-- 定义容器 -->
+<div id="test"></div>
+<!-- jsx代码 -->
+<script type="text/babel">
+    const myId = 'my-id';
+    const text = '前端JS框架列表';
+    const data = ['Angular', 'react', 'Vue', 'angular', 'jquery']
+    function MyComponent() {
+        return (
+            <div>
+                <h1 className={myId}>{text}</h1>
+                <ul>{data.map((i, index) => { return <li key={index}>{i}</li> })}</ul>
+            </div>
+        )
+    }
+
+    ReactDOM.render(<MyComponent />, document.getElementById("test"));
+</script>
+
+
+</body>
+
+</html>

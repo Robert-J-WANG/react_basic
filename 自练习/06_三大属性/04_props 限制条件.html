@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入本地下载的react库 -->
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于jsx  转为js -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <!-- 引入 prop-types库，用于设置属性的限制条件 -->
+    <script type="text/javascript" src="../../js/prop-types.js"></script>
+    <style>
+        .tb {
+            margin: 10px auto;
+            width: 300px;
+            border: 1px solid blue;
+        }
+
+        .tb tbody {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="test"></div>
+    <div id="test2"></div>
+    <!-- 使用函数式组件渲染 -->
+    <div id="test3"></div>
+    <script type="text/babel">
+        class MyComponent extends React.Component {
+            // 需要引入库
+            static propTypes = {
+                name: PropTypes.string.isRequired,
+                age: PropTypes.number,
+                sex: PropTypes.string,
+            }
+            static defaultProps = {
+                age: 99,
+                sex: "cowboy"
+            }
+            render() {
+                //3. 获取接受到的数据
+                const { name, age, sex } = this.props;
+                //4. 渲染数据
+                return (
+                    <div>
+                        <table className="tb">
+                            <thead>
+                                <tr>
+                                    <th>name</th>
+                                    <th>age</th>
+                                    <th>sex</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{name}</td>
+                                    <td>{age + 1}</td>
+                                    <td>{sex}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                )
+            }
+
+        }
+
+        //-----------------------函数式组件使用props---------------------------------
+
+        function MyComponent2(props) {
+            const { name, age, sex } = props
+            return (
+                <div>
+                    <table className="tb">
+                        <thead>
+                            <tr>
+                                <th>name</th>
+                                <th>age</th>
+                                <th>sex</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{name}</td>
+                                <td>{age + 100}</td>
+                                <td>{sex}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+        // props的限制只能写在函数组件外部
+        MyComponent2.propTypes = {
+            name: PropTypes.string.isRequired,
+            age: PropTypes.number,
+            sex: PropTypes.string,
+        }
+        MyComponent2.defaultProps = {
+            age: 99,
+            sex: "cowboy"
+        }
+
+        //-----------------------函数式组件使用props---------------------------------
+
+        //1.模拟从后端获取的数据
+        const data = { name: "jack", sex: "male" };
+        const data2 = { name: "peter", age: 23 };
+        //2.把数据传入组件内部（组件的props属性会接受数据）
+        ReactDOM.render(<MyComponent {...data} />, document.getElementById("test"));
+        ReactDOM.render(<MyComponent {...data2} />, document.getElementById("test2"));
+        ReactDOM.render(<MyComponent2 {...data2} />, document.getElementById("test3"));
+    </script>
+
+</body>
+
+</html>

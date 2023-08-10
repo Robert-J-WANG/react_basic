@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入本地下载的react库 -->
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于jsx  转为js -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="test"></div>
+    <script type="text/babel">
+        class MyComponent extends React.Component {
+            state = { isHot: true, isWind: false }
+
+            change = () => {
+                const { isHot, isWind } = this.state;
+                this.setState({ isHot: !isHot, isWind: !isWind })
+            }
+
+            render() {
+                const { isHot, isWind } = this.state;
+                const { date, how } = this.props;
+
+                return (
+                    <div>
+                        <h1 onClick={this.change} >
+                            {date}天气{how} {isHot ? "hot" : "cold"}, {isWind ? "wind" : "no wind"}
+                        </h1>
+                    </div>
+                )
+            }
+        }
+        const data = { date: "tomorrow", how: "very" }
+        ReactDOM.render(<MyComponent {...data} />, document.getElementById("test"));
+
+    </script>
+
+</body>
+
+</html>
